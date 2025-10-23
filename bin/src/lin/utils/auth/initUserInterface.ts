@@ -30,9 +30,7 @@ const initUserInterface = async (): Promise<void> => {
 		const isSuccess = response.status === true && Boolean(successLink);
 
 		if (!isSuccess) {
-			const errorMessage = response.message
-				?? 'Failed to get login link from server. Please check your internet connection or try again later.';
-			loader.error(errorMessage);
+			loader.error("Failed to initiate authentication process because the server didn't respond correctly.");
 			return;
 		}
 
