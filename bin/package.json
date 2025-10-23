@@ -1,6 +1,5 @@
 {
   "name": "bin",
-  "packageManager": "yarn@4.6.0",
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/index.ts",
