@@ -76,6 +76,7 @@ async function initializeCacheDir(): Promise<void> {
 
 	loader.done('All files and directories are set up.');
 	await sleep(250);
+	return true;
 }
 
 export default initializeCacheDir;
