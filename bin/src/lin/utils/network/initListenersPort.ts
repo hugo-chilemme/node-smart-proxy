@@ -1,6 +1,6 @@
 import loading from '../../utils/loader.js';
 import type { ConfigState, PortsConfig } from '../../../types/cache.js';
-import { checkMultiplePorts } from './utils/checkAvailablePort.js';
+import { checkAvailablePort } from './utils/checkAvailablePort.js';
 
 const REQUIRED_PORTS: (keyof PortsConfig)[] = ['https', 'http', 'socks5'];
 
@@ -44,11 +44,19 @@ const initListenersPort = async (): Promise<void> => {
 	}
 
 	try {
-		await checkMultiplePorts(Object.values(configData.ports));
+		for (const portKey of REQUIRED_PORTS) {
+			const portValue = configData.ports[portKey];
+			const isAvailable = await checkAvailablePort(portValue);
+
+			if (!isAvailable) {
+				throw new Error(`Port ${portValue} for ${portKey.toUpperCase()} listener is already in use.`);
+			}
+		}
 	} catch (error) {
 		const message = error instanceof Error ? error.message : 'Unknown port availability error.';
 		loader.error(message);
-		return;
+		await new Promise((resolve) => setTimeout(resolve, 500));
+		process.exit(1);
 	}
 
 	loader.done('Configuration ports are ready and available.');
