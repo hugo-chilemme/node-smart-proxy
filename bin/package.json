@@ -3,13 +3,19 @@
   "packageManager": "yarn@4.6.0",
   "type": "module",
   "scripts": {
-    "dev": "nodemon src/index.js",
-    "start": "node src/index.js"
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
   },
   "dependencies": {
     "chalk": "^5.6.2",
     "cli-spinner": "^0.2.10",
     "cli-spinners": "^3.3.0",
     "log-update": "^7.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.16.5",
+    "tsx": "^4.19.1",
+    "typescript": "^5.5.4"
   }
 }
